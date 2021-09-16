@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ppm.model\ppm.model.csproj" />
+    <ProjectReference Include="..\ppm.ui.console\ppm.ui.cli.csproj" />
+  </ItemGroup>
+
+</Project>

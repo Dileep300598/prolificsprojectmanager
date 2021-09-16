@@ -16,6 +16,7 @@ namespace Domain
         {
             Result result = new Result() { isSucess = true };
             try
+           
             {
                 _roleList.Add(role);
                 result.status = "Role added";

@@ -20,8 +20,21 @@ namespace ppm.domain
             Result result = new Result() { isSucess = true };
             try
             {
-               _projectList.Add(pro);
-                result.status = "Project added";
+                if (_projectList.Count > 0)
+                {
+                    if (_projectList.Exists(pr => pr.id == pro.id))
+
+                    {
+                        result.isSucess = false;
+                        result.status = "project already exists" + pro.Name;
+                    }
+                }
+                else
+                {
+                    _projectList.Add(pro);
+                    result.status = "Project added";
+                }
+                
             }
             catch (Exception ex)
             {

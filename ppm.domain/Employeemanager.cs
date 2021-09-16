@@ -18,10 +18,23 @@ namespace ppm.domain
         public Result AddEmployee(Employee emp)
         {
             Result result = new Result() { isSucess = true };
+
             try
             {
-                _EmployeeList.Add(emp);
-                result.status = "Employee added";
+                if (_EmployeeList.Count > 0)
+                {
+                    if (_EmployeeList.Exists(em => em.Id == emp.Id))
+
+                    {
+                        result.isSucess = false;
+                        result.status = "employee already exists" + emp.Fullname;
+                    }
+                }
+                else
+                {
+                    _EmployeeList.Add(emp);
+                    result.status = "Employee added";
+                }
             }
             catch (Exception ex)
             {

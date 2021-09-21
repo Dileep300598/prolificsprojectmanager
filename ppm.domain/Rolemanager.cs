@@ -16,10 +16,22 @@ namespace Domain
         {
             Result result = new Result() { isSucess = true };
             try
-           
+
             {
-                _roleList.Add(role);
-                result.status = "Role added";
+                if (_roleList.Count > 0)
+                {
+                    if (_roleList.Exists(r => r.RoleId == role.RoleId))
+                    {
+                        result.isSucess = false;
+                        result.status = "Role already exists" + role.RoleName;
+                    }
+                    else
+                    {
+                        _roleList.Add(role);
+                        result.status = "Role Added";
+                    }
+                 
+                }
             }
             catch (Exception ex)
             {

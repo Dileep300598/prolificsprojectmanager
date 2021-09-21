@@ -60,5 +60,16 @@ namespace ppm.domain
             }
             return data;
         }
+        public Result IsValidEmp(string empname)
+        {
+            Result result = new Result() { isSucess = true };
+            return result;
+        }
+        public DataResult<Employee> GetAllEmployee()
+        {
+            DataResult<Employee> data = new DataResult<Employee> { isSucess = true };
+            return data;
+        }
+      
     }
 }

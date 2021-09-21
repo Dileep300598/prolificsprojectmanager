@@ -16,7 +16,10 @@ namespace ppm.ui.cli
             Console.WriteLine("4.View Employee");
             Console.WriteLine("5.Add Role");
             Console.WriteLine("6.View Role");
-            Console.WriteLine("7.Exit");
+            Console.WriteLine("7.Add Employee To Project");
+            Console.WriteLine("8.Delete Employee From Project");
+            Console.WriteLine("9.View project detail");
+            Console.WriteLine("10.Exit");
             
             bool i = true;
             while (i)
@@ -69,7 +72,7 @@ namespace ppm.ui.cli
                                 Console.WriteLine("Employee id:" + emp.Id);
                                 Console.WriteLine("Employee Name:" + emp.Fullname);
                                 Console.WriteLine("Employee Contact:" + emp.Contact);
-                                Console.WriteLine("Employee Roleid:" + emp.Roleid);
+                                Console.WriteLine("Employee RoleName:" + emp.RoleName);
                                 C++;
                             }
                         }
@@ -103,9 +106,19 @@ namespace ppm.ui.cli
                         }
                         break;
                     case 7:
+
+                        Console.WriteLine("Add Employee To Project");
+
+                        AddEmployeetoProject();
+
+                        break;
+                    case 8:
+                        Console.WriteLine("Remove Employee From Project");
+                        RemoveEmployeefromProject();
+                        break;
+                    case 9:
                         Environment.Exit(0);
                         break;
-
 
 
                     default:
@@ -159,8 +172,8 @@ namespace ppm.ui.cli
             emp.Fullname = Console.ReadLine();
             Console.WriteLine("Enter Employee Contact");
             emp.Contact = Convert.ToInt64(Console.ReadLine());
-            Console.WriteLine("Enter Employee Roleid");
-            emp.Roleid = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter Employee RoleName");
+            emp.RoleName = Console.ReadLine();
             Employeemanager e = new Employeemanager();
             var result = e.AddEmployee(emp);
             if (!result.isSucess)
@@ -194,8 +207,69 @@ namespace ppm.ui.cli
             }
             return result.isSucess;
         }
+        private static bool AddEmployeetoProject()
+        {
+            Console.WriteLine("Enter project id:");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter name of the Employee :");
+            string empname = Console.ReadLine();
+            Employeemanager employeemanager = new Employeemanager();
+            var valid = employeemanager.IsValidEmp(empname);
+            if (!valid.isSucess)
+            {
+                Projectmanager projectmanager = new Projectmanager();
+                var result = projectmanager.AddEmpToProject(empname, id);
+                if (!result.isSucess)
+                {
+                    Console.WriteLine("Employee failed to add into project");
+                    Console.WriteLine(result.status);
+                }
+                else
+                {
+                    Console.WriteLine(result.status);
+                }
+                return result.isSucess;
+            }
+            else
+            {
+                Console.WriteLine(valid.status);
+            }
+            return valid.isSucess;
 
-      
+        }
+
+
+
+        private static bool RemoveEmployeefromProject()
+        {
+            Console.WriteLine("Enter project id:");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter name of the Employee :");
+            string empname = Console.ReadLine();
+            Employeemanager employeemanager = new Employeemanager();
+            var valid = employeemanager.IsValidEmp(empname);
+            if (!valid.isSucess)
+            {
+                Projectmanager projectmanager = new Projectmanager();
+                var result = projectmanager.RemoveEmpFromProject(empname, id);
+                if (!result.isSucess)
+                {
+                    Console.WriteLine("Employee failed to add into project");
+                    Console.WriteLine(result.status);
+                }
+                else
+                {
+                    Console.WriteLine(result.status);
+                }
+                return result.isSucess;
+            }
+            else
+            {
+                Console.WriteLine(valid.status);
+            }
+            return valid.isSucess;
+        }
     }
 
 }
+

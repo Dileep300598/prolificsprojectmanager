@@ -11,6 +11,6 @@ namespace ppm.model
         public int Id { get; set; }
         public string Fullname { get; set; }
         public long Contact { get; set; }
-        public int Roleid { get; set; }
+        public string RoleName { get; set; }
     }
 }

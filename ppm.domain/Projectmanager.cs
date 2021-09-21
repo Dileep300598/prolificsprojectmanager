@@ -60,6 +60,17 @@ namespace ppm.domain
             }
             return data;
         }
+        public Result AddEmpToProject(string empname,int id)
+        {
+            Result result = new Result() { isSucess = true };
+            return result;
+        }
+        public Result RemoveEmpFromProject(string empname,int id)
+        {
+            Result result = new Result() { isSucess = true };
+            return result;
+        }
+
     }
 }
 

@@ -14,7 +14,7 @@ namespace ppm.model
         public DateTime EndDate { get; set; }
         public decimal Budget { get; set; }
 
-        public List<string> Emplist;
+        public List<Employee> Emplist;
     }
 }
    

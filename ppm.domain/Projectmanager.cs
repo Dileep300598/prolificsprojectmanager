@@ -34,7 +34,7 @@ namespace ppm.domain
                     _projectList.Add(pro);
                     result.status = "Project added";
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -60,19 +60,102 @@ namespace ppm.domain
             }
             return data;
         }
-        public Result AddEmpToProject(string empname,int id)
+        public Project GetProjectByID(int id)
+        {
+            Project project = new Project();
+            project.Emplist = _projectList.Single(p => p.id == id).Emplist;
+            return project;
+        }
+        public Result AddEmpToProject(Employee empname, int id)
         {
             Result result = new Result() { isSucess = true };
+
+            try
+            {
+                if (_projectList.Count > 0)
+                {
+                    if (_projectList.Exists(p => p.id == id))
+                    {
+                        if (_projectList.Single(p => p.id == id).Emplist == null)
+                        {
+                            _projectList.Single(p => p.id == id).Emplist = new List<Employee>();
+                        }
+
+                        if (_projectList.Single(p => p.id == id).Emplist.Exists(e => e.Id == id))
+                        {
+                            result.status = $"Employee Id : {id} already exists in this project: {id}";
+                        }
+                        else
+                        {
+                            _projectList.Single(p => p.id == id).Emplist.Add(empname);
+                            result.status = "Employee is Added to project";
+
+                        }
+
+                    }
+                    else
+                    {
+                        result.isSucess = false;
+                        result.status = "Project Id not found!" + id;
+                    }
+                }
+                else
+                {
+                    result.isSucess = false;
+                    result.status = "Project list is Empty!";
+                }
+
+            }
+            catch (Exception e)
+            {
+                result.isSucess = false;
+                result.status = "Exception Occured : " + e.ToString();
+            }
             return result;
         }
-        public Result RemoveEmpFromProject(string empname,int id)
+        public Result DeleteEmpFromProject(int id, Employee employee)
         {
-            Result result = new Result() { isSucess = true };
-            return result;
+            Project project = new Project();
+            Result action = new Result() { isSucess = true };
+            try
+            {
+                if (_projectList.Exists(p => p.id == id))
+                {
+                    if (_projectList.Single(s => s.id == id).Emplist.Exists(n => n.Id == employee.Id))
+                    {
+                        var itemToRemove = _projectList.Single(s => s.id == id).Emplist.Single(e => e.Id == employee.Id);
+                        _projectList.Single(s => s.id == id).Emplist.Remove(itemToRemove);
+                        action.status = "Employee is Deleted Successfully " + employee.Id;
+                    }
+                    else
+                    {
+                        action.isSucess = false;
+                        action.status = "Given Employee ID is not Present in the particular Project " + employee.Id;
+                    }
+                }
+                else
+                {
+                    action.isSucess = false;
+                    action.status = "Project Id is not in the List!" + id;
+                }
+            }
+            catch (Exception e)
+            {
+                action.isSucess = false;
+                action.status = "Exception Occured : " + e.ToString();
+            }
+            return action;
         }
 
     }
 }
+
+
+
+
+
+
+
 
 
 

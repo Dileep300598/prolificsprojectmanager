@@ -13,6 +13,6 @@ namespace ppm.model.common
     }
     public class DataResult<T> : Result
     {
-        public IEnumerable<T> results;
+        public IEnumerable<T> results { get; set; }
     }
 }

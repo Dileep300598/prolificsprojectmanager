@@ -5,7 +5,7 @@ using ppm.ui.cli;
 
 namespace ppm 
 {
-    class program
+    static class Program
     {
         public static void Main(string[] args)
         {
@@ -13,7 +13,7 @@ namespace ppm
             {
                 throw new ArgumentNullException(nameof(args));
             }
-            cmd co = new cmd();
+            Cmd co = new Cmd();
             co.startprogram();
 
         }

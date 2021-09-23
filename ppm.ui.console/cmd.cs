@@ -5,7 +5,7 @@ using ppm.model;
 
 namespace ppm.ui.cli
 {
-    public class cmd
+    public class Cmd
     {
         public void startprogram()
         {
@@ -128,6 +128,7 @@ namespace ppm.ui.cli
                                 Console.WriteLine("Employee Assigned: ");
                                 if (result.Emplist != null)
                                 {
+
                                     foreach (Employee e in result.Emplist)
                                     {
                                         Console.WriteLine("Employee Id: " + e.Id + " " + "Employee FullName: " + e.Fullname);
@@ -157,7 +158,7 @@ namespace ppm.ui.cli
 
         }
 
-        private bool AddProject()
+        private static void AddProject()
         {
             Project project = new Project();
             Console.WriteLine("Enter Project Id");
@@ -185,9 +186,8 @@ namespace ppm.ui.cli
                 Console.WriteLine(result.status);
 
             }
-            return result.isSucess;
         }
-        private bool AddEmployee()
+        private static void AddEmployee()
         {
 
             Employee emp = new Employee();
@@ -210,10 +210,9 @@ namespace ppm.ui.cli
             {
                 Console.WriteLine(result.status);
             }
-            return result.isSucess;
         }
 
-        private bool AddRole()
+        private static void AddRole()
         {
             Role rol = new Role();
 
@@ -229,19 +228,19 @@ namespace ppm.ui.cli
             }
             else
             {
-
+                Console.WriteLine(result.status);
             }
-            return result.isSucess;
+
         }
-        private static bool AddEmployeetoProject()
+        private static void AddEmployeetoProject()
         {
             Employee emp = new Employee();
             Console.WriteLine("Enter project id:");
             int id = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Enter name of the Employee :");
-            string empname = Console.ReadLine();
+            Console.WriteLine("Enter The Employee id :");
+            emp.Id = Convert.ToInt32(Console.ReadLine());
             Employeemanager employeemanager = new Employeemanager();
-            var valid = employeemanager.IsValidEmp(empname);
+            var valid = employeemanager.IsValidEmp(emp);
             if (!valid.isSucess)
             {
                 Projectmanager projectmanager = new Projectmanager();
@@ -255,19 +254,15 @@ namespace ppm.ui.cli
                 {
                     Console.WriteLine(result.status);
                 }
-                return result.isSucess;
             }
             else
             {
                 Console.WriteLine(valid.status);
             }
-            return valid.isSucess;
-
+           
         }
 
-
-
-        private static bool RemoveEmployeefromProject()
+        private static void RemoveEmployeefromProject()
         {
             Projectmanager projectManager = new Projectmanager();
             Employee employee = new Employee();
@@ -305,7 +300,7 @@ namespace ppm.ui.cli
             {
                 Console.WriteLine(result.status);
             }
-            return result.isSucess;
+           
         }
     }
 }

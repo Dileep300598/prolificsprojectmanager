@@ -7,11 +7,8 @@ namespace Domain
 {
     public class Rolemanager
     {
-        private static List<Role> _roleList;
-        static Rolemanager()
-        {
-            _roleList = new List<Role>();
-        }
+        private static List<Role> _roleList=new List<Role>();
+   
         public Result AddRole(Role role)
         {
             Result result = new Result() { isSucess = true };

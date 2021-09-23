@@ -10,11 +10,8 @@ namespace ppm.domain
 {
     public class Projectmanager
     {
-        private static List<Project> _projectList;
-        static Projectmanager()
-        {
-            _projectList = new List<Project>();
-        }
+        private static List<Project> _projectList = new List<Project>();
+        
         public Result AddProject(Project pro)
         {
             Result result = new Result() { isSucess = true };
@@ -115,7 +112,6 @@ namespace ppm.domain
         }
         public Result DeleteEmpFromProject(int id, Employee employee)
         {
-            Project project = new Project();
             Result action = new Result() { isSucess = true };
             try
             {

@@ -10,11 +10,8 @@ namespace ppm.domain
 {
     public class Employeemanager
     {
-        private static List<Employee> _EmployeeList;
-        static Employeemanager()
-        {
-            _EmployeeList = new List<Employee>();
-        }
+        private static List<Employee> _EmployeeList = new List<Employee>();
+        
         public Result AddEmployee(Employee emp)
         {
             Result result = new Result() { isSucess = true };
@@ -60,9 +57,27 @@ namespace ppm.domain
             }
             return data;
         }
-        public Result IsValidEmp(string empname)
+        public Result IsValidEmp(Employee emp1)
+
         {
             Result result = new Result() { isSucess = true };
+            try
+            {
+                if (_EmployeeList.Exists(e => e.Id == emp1.Id))
+                {
+                    result.status = "Validation Successful!";
+                }
+                else
+                {
+                    result.isSucess = false;
+                    result.status = "ID is not in the Employee List " + emp1.Id;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("error occured" + e.ToString());
+                result.isSucess = false;
+            }
             return result;
         }
         public DataResult<Employee> GetAllEmployee()

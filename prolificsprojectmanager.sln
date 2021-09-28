@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ppm.domain", "ppm.domain\pp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ppm.ui.cli", "ppm.ui.console\ppm.ui.cli.csproj", "{A8E62DB6-503A-4A42-BC9D-39041081237D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ppm test", "ppm test\ppm test.csproj", "{0FC8F828-EFA8-4F24-AED2-C52ADA64C03B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{A8E62DB6-503A-4A42-BC9D-39041081237D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8E62DB6-503A-4A42-BC9D-39041081237D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8E62DB6-503A-4A42-BC9D-39041081237D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FC8F828-EFA8-4F24-AED2-C52ADA64C03B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FC8F828-EFA8-4F24-AED2-C52ADA64C03B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FC8F828-EFA8-4F24-AED2-C52ADA64C03B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FC8F828-EFA8-4F24-AED2-C52ADA64C03B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,306 +2,284 @@
 using Domain;
 using ppm.domain;
 using ppm.model;
-
 namespace ppm.ui.cli
 {
     public class Cmd
     {
         public void startprogram()
+
         {
-            Projectmanager m1 = new Projectmanager();
+
             Console.WriteLine("following operation");
-            Console.WriteLine("1.Add project");
-            Console.WriteLine("2.View project");
-            Console.WriteLine("3.Add Employee");
-            Console.WriteLine("4.View Employee");
-            Console.WriteLine("5.Add Role");
-            Console.WriteLine("6.View Role");
-            Console.WriteLine("7.Add Employee To Project");
-            Console.WriteLine("8.Delete Employee From Project");
-            Console.WriteLine("9.View project detail");
-            Console.WriteLine("10.Exit");
-
-            bool i = true;
-            while (i)
+            Console.WriteLine("1.Project Module");
+            Console.WriteLine("2.Employee Module");
+            Console.WriteLine("3.Role Module");
+            Console.WriteLine("4.Quit");
+            int i = 0;
+            while (true)
             {
-                Console.Write("select an option: ");
-                int num = int.Parse(Console.ReadLine());
-                switch (num)
+                try
                 {
+                    Console.WriteLine("choose the given option: ");
+                    i = Convert.ToInt32(Console.ReadLine());
+                    switch (i)
+                    {
+                        case 1:
+                            ProjectModule();
+                            break;
+                        case 2:
+                            EmployeeModule();
+                            break;
+                        case 3:
+                            RoleModule();
+                            break;
+                        default:
+                            Console.WriteLine("Option is not in the list!");
+                            break;
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("oops! Error Occured! Try Again");
+                    startprogram();
 
-                    case 1:
-                        AddProject();
+                }
 
-                        break;
-                    case 2:
-                        Projectmanager pro = new Projectmanager();
-                        var pres = pro.GetProjectInfo();
+            }
+        }
 
-                        int c = 0;
-                        if (pres.isSucess)
-                        {
-                            foreach (Project item in pres.results)
+        public void ProjectModule()
+        {
+            Console.WriteLine("Choose the option you want to select:");
+            Console.WriteLine("Press 1: Add Project");
+            Console.WriteLine("Press 2: List Project");
+            Console.WriteLine("Press 3: List Project by Id");
+            Console.WriteLine("Press 4: Delete Project");
+            Console.WriteLine("Press 5: Add employee to Project");
+            Console.WriteLine("Press 6: Go to main Menu");
+            int j = 0;
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine("Choose Your Option from 1 to 6: ");
+                    j = Convert.ToInt32(Console.ReadLine());
+                    Projectmanager v2 = new Projectmanager();
+                    switch (j)
+                    {
+                        case 1:
+                            v2.AddProject();
+                            break;
+                        case 2:
+                            Console.WriteLine("Project Details: ");
+                            var ResPro = v2.ListAll();
+                            if (ResPro.isSucess)
                             {
-                                Console.WriteLine("Project: " + c);
-                                Console.WriteLine("projectId:" + item.id);
-                                Console.WriteLine("projectName:" + item.Name);
-                                Console.WriteLine("projectStartDate:" + item.StartDate);
-                                Console.WriteLine("projectEndDate:" + item.EndDate);
-                                Console.WriteLine("projectBudget:" + item.Budget);
-                                c++;
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine(pres.status);
-                        }
-                        break;
-                    case 3:
-                        AddEmployee();
-                        break;
-                    case 4:
-                        Employeemanager employeemanager = new Employeemanager();
-                        var employee = employeemanager.GetEmployeeInfo();
-                        int C = 0;
-                        if (employee.isSucess)
-                        {
-                            foreach (Employee emp in employee.results)
-                            {
-
-                                Console.WriteLine("Employee no: " + i);
-                                Console.WriteLine("Employee id:" + emp.Id);
-                                Console.WriteLine("Employee Name:" + emp.Fullname);
-                                Console.WriteLine("Employee Contact:" + emp.Contact);
-                                Console.WriteLine("Employee RoleName:" + emp.RoleName);
-                                C++;
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine(employee.status);
-                        }
-                        break;
-
-                    case 5:
-                        AddRole();
-                        break;
-                    case 6:
-                        Rolemanager rolemgr = new Rolemanager();
-                        var roleInfoResult = rolemgr.GetRoleInfo();
-                        int count = 0;
-                        if (roleInfoResult.isSucess)
-                        {
-                            foreach (Role item in roleInfoResult.results)
-                            {
-                                Console.WriteLine("Role no: " + count);
-                                Console.WriteLine("Role id:" + item.RoleId);
-                                Console.WriteLine("Role Name:" + item.RoleName);
-
-                                count++;
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine(roleInfoResult.status);
-                        }
-                        break;
-                    case 7:
-
-                        Console.WriteLine("Add Employee To Project");
-
-                        AddEmployeetoProject();
-
-                        break;
-                    case 8:
-                        Console.WriteLine("Remove Employee From Project");
-                        RemoveEmployeefromProject();
-                        break;
-                    case 9:
-                        Console.WriteLine("Project Details with Employee Assigned");
-                        var resultPro = m1.GetProjectInfo();
-                        if (resultPro.isSucess)
-                        {
-                            foreach (Project result in resultPro.results)
-                            {
-                                Console.WriteLine("Project ID: " + result.id + "\nProject Name: " + result.Name + "\nStarting Date: " + result.StartDate + "\nBudget: " + result.Budget);
-                                Console.WriteLine("Employee Assigned: ");
-                                if (result.Emplist != null)
+                                foreach (Project result1 in ResPro.results)
                                 {
-
-                                    foreach (Employee e in result.Emplist)
-                                    {
-                                        Console.WriteLine("Employee Id: " + e.Id + " " + "Employee FullName: " + e.Fullname);
-                                    }
+                                    Console.WriteLine("Project id: " + result1.id + "\nProject Name: " + result1.Name + "\nstarting date: " + result1.StartDate + "\nEnd Date:" + result1.EndDate + "\nBudget :" + result1.Budget);
                                 }
 
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine(resultPro.status);
-                        }
-                        break;
+                            else
+                            {
+                                Console.WriteLine(ResPro.status);
+                            }
+                            break;
+                        case 3:
+                            Console.WriteLine("Enter project id which u want to display");
+                            int n1 = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Project Details:");
+                            var ResPro1 = v2.ListAll();
+                            if (ResPro1.isSucess)
+                            {
+                                foreach (Project result1 in ResPro1.results)
+                                {
+                                    if (result1.id == n1)
+                                    {
+                                        Console.WriteLine("Project id: " + result1.id + "\nProject Name: " + result1.Name + "\nstarting date: " + result1.StartDate + "\nEnd Date:" + result1.EndDate + "\nBudget :" + result1.Budget);
 
-                    case 10:
-                        Environment.Exit(0);
-                        break;
-
-
-                    default:
-                        Console.WriteLine("Invalid Option");
-                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine(ResPro1.status);
+                            }
+                            break;
+                        case 4:
+                            v2.DeleteProjectById();
+                            break;
+                        case 5:
+                            v2.AddEmployeeToProject();
+                            break;
+                        case 6:
+                            startprogram();
+                            break;
+                        default:
+                            Console.WriteLine("OOPS!Error occured! Try Again");
+                            break;
+                    }
                 }
-            }
-
-
-
-        }
-
-        private static void AddProject()
-        {
-            Project project = new Project();
-            Console.WriteLine("Enter Project Id");
-            project.id = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Enter project name");
-            project.Name = Convert.ToString(Console.ReadLine());
-            Console.WriteLine("Enter project startdate");
-            project.StartDate = Convert.ToDateTime(Console.ReadLine());
-            Console.WriteLine("Enter project Enddate");
-            project.EndDate = Convert.ToDateTime(Console.ReadLine());
-            Console.WriteLine("Enter project Budget");
-            project.Budget = Convert.ToDecimal(Console.ReadLine());
-
-            Projectmanager p = new Projectmanager();
-            var result = p.AddProject(project);
-
-            if (!result.isSucess)
-            {
-                Console.WriteLine("project already exists");
-                Console.WriteLine(result.status);
-            }
-            else
-            {
-
-                Console.WriteLine(result.status);
-
-            }
-        }
-        private static void AddEmployee()
-        {
-
-            Employee emp = new Employee();
-
-            Console.WriteLine("Enter Employee Id");
-            emp.Id = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Enter Employee Fullname");
-            emp.Fullname = Console.ReadLine();
-            Console.WriteLine("Enter Employee Contact");
-            emp.Contact = Convert.ToInt64(Console.ReadLine());
-            Console.WriteLine("Enter Employee RoleName");
-            emp.RoleName = Console.ReadLine();
-            Employeemanager e = new Employeemanager();
-            var result = e.AddEmployee(emp);
-            if (!result.isSucess)
-            {
-                Console.WriteLine("Employee already exists");
-            }
-            else
-            {
-                Console.WriteLine(result.status);
-            }
-        }
-
-        private static void AddRole()
-        {
-            Role rol = new Role();
-
-            Console.WriteLine("Enter Role Id");
-            rol.RoleId = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Enter RoleName");
-            rol.RoleName = Console.ReadLine();
-            Rolemanager r = new Rolemanager();
-            var result = r.AddRole(rol);
-            if (!result.isSucess)
-            {
-                Console.WriteLine("Role already exists");
-            }
-            else
-            {
-                Console.WriteLine(result.status);
-            }
-
-        }
-        private static void AddEmployeetoProject()
-        {
-            Employee emp = new Employee();
-            Console.WriteLine("Enter project id:");
-            int id = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Enter The Employee id :");
-            emp.Id = Convert.ToInt32(Console.ReadLine());
-            Employeemanager employeemanager = new Employeemanager();
-            var valid = employeemanager.IsValidEmp(emp);
-            if (!valid.isSucess)
-            {
-                Projectmanager projectmanager = new Projectmanager();
-                var result = projectmanager.AddEmpToProject(emp, id);
-                if (!result.isSucess)
+                catch (Exception)
                 {
-                    Console.WriteLine("Employee failed to add into project");
-                    Console.WriteLine(result.status);
-                }
-                else
-                {
-                    Console.WriteLine(result.status);
+                    Console.WriteLine("OOPS!Error Ocurred! try again");
+                    startprogram();
                 }
             }
-            else
-            {
-                Console.WriteLine(valid.status);
-            }
-           
         }
 
-        private static void RemoveEmployeefromProject()
+        public void EmployeeModule()
         {
-            Projectmanager projectManager = new Projectmanager();
-            Employee employee = new Employee();
-            Console.WriteLine("Choose Project From Below Project List:");
-            Console.WriteLine("Project ID: Project Name");
-            var resPro = projectManager.GetProjectInfo();
-            if (resPro.isSucess)
+            Console.WriteLine("Choose the Option you want to select:");
+            Console.WriteLine("Press 1: Add Employee");
+            Console.WriteLine("Press 2: List All Employee");
+            Console.WriteLine("Press 3: List Employee by Id");
+            Console.WriteLine("Press 4: Delete Employee");
+            Console.WriteLine("Press 5: Return to main Menu");
+            int j = 0;
+            while (true)
             {
-                foreach (Project res in resPro.results)
+                try
                 {
-                    Console.WriteLine(res.id + " : " + res.Name);
+                    Console.WriteLine("Choose Your option from 1 to 5: ");
+                    j = Convert.ToInt32(Console.ReadLine());
+                    Employeemanager e1 = new Employeemanager();
+                    switch (j)
+                    {
+                        case 1:
+                            e1.AddEmployee();
+                            break;
+                        case 2:
+                            Console.WriteLine("Employee Details: ");
+                            var ResEmp = e1.ListAll();
+                            if (ResEmp.isSucess)
+                            {
+                                foreach (Employee e2 in ResEmp.results)
+                                {
+                                    Console.WriteLine("Employee id: " + e2.Id + "\nEmployee_Name Name: " + e2.Fullname + "\nContact: " + e2.Contact + "\nRoleName :" + e2.RoleName);
+
+                                }
+
+                            }
+                            else
+                            {
+                                Console.WriteLine(ResEmp.status);
+                            }
+                            break;
+                        case 3:
+                            Console.WriteLine("Enter Employee id which u want to display");
+                            int E1 = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Employee Details: ");
+                            var ResEmp1 = e1.ListAll();
+                            if (ResEmp1.isSucess)
+                            {
+                                foreach (Employee e2 in ResEmp1.results)
+                                {
+                                    if (e2.Id == E1)
+                                    {
+                                        Console.WriteLine("Employee id: " + e2.Id + "\nEmployee_Name Name: " + e2.Fullname + "\nContact: " + e2.Contact + "\nRoleName :" + e2.RoleName);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine(ResEmp1.status);
+                            }
+                            break;
+                        case 4:
+                            e1.DeleteEmployeeById();
+                            break;
+                        case 5:
+                            startprogram();
+                            break;
+                        default:
+                            Console.WriteLine("OOPS ! Error Occoured! Try Again");
+                            break;
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("OOPS Error occured! try Again");
                 }
             }
-            else
+        }
+        public void RoleModule()
+        {
+            Console.WriteLine("Choose the Option you want to select:");
+            Console.WriteLine("Press 1: Add Role");
+            Console.WriteLine("Press 2: List All Role");
+            Console.WriteLine("Press 3: List Role by Id");
+            Console.WriteLine("Press 4: Delete Role");
+            Console.WriteLine("Press 5: GO to main Menu");
+            int j = 0;
+            while (true)
             {
-                Console.WriteLine(resPro.status);
-            }
+                try
+                {
+                    Console.WriteLine("Choose your options: ");
+                    j = Convert.ToInt32(Console.ReadLine());
+                    Rolemanager m3 = new Rolemanager();
+                    switch (j)
+                    {
+                        case 1:
+                            m3.AddRole();
+                            break;
+                        case 2:
+                            Console.WriteLine("Role Details: ");
+                            var Resrole = m3.ListAll();
+                            if (Resrole.isSucess)
+                            {
+                                foreach (Role e2 in Resrole.results)
+                                {
+                                    Console.WriteLine("Role Id: " + e2.RoleId + "\nRole Name: " + e2.RoleName);
 
-            Console.Write("Enter The project Id From Employee Should Be removed: ");
-            int projectId = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine($"Choose The Employee Id in Selected Project Id: {projectId} From the Following List: Employee ID : Employee Name");
-            var empList = projectManager.GetProjectByID(projectId);
-            foreach (Employee res in empList.Emplist)
-            {
-                Console.WriteLine(res.Id + " : " + res.Fullname);
+                                }
+
+                            }
+                            else
+                            {
+                                Console.WriteLine(Resrole.status);
+                            }
+                            break;
+                        case 3:
+                            Console.WriteLine("Enter project id which u want to display");
+                            int n1 = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Project Details:");
+                            var Resrole1 = m3.ListAll();
+                            if (Resrole1.isSucess)
+                            {
+                                foreach (Role e2 in Resrole1.results)
+                                {
+                                    if (e2.RoleId == n1)
+                                    {
+                                        Console.WriteLine("Role Id: " + e2.RoleId + "\nRole Name: " + e2.RoleName);
+
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine(Resrole1.status);
+                            }
+                            break;
+                        case 4:
+                            m3.DeleteRoleById();
+                            break;
+                        case 5:
+                            startprogram();
+                            break;
+                        default:
+                            Console.WriteLine("optipon is in the list!");
+                            break;
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("oops! Error occured! Try Again");
+                }
+
             }
-            Console.Write("Enter the ID of the Employee to remove: ");
-            employee.Id = Convert.ToInt32(Console.ReadLine());
-            var result = projectManager.DeleteEmpFromProject(projectId, employee);
-            if (!result.isSucess)
-            {
-                Console.WriteLine(result.status);
-            }
-            else
-            {
-                Console.WriteLine(result.status);
-            }
-           
         }
     }
 }
-

@@ -8,11 +8,41 @@ using ppm.model.common;
 
 namespace ppm.domain
 {
-    public class Employeemanager
+    public class Employeemanager: IOperation<Employee>
     {
         private static List<Employee> _EmployeeList = new List<Employee>();
-        
-        public Result AddEmployee(Employee emp)
+        public void AddEmployee()
+        {
+            Employee Emp = new Employee();
+            try
+            {
+                Console.WriteLine("Enter Employee Id");
+                Emp.Id = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter Employee Fullname");
+                Emp.Fullname = Convert.ToString(Console.ReadLine());
+                Console.WriteLine("Enter Employee Contact ");
+                Emp.Contact = Convert.ToInt64(Console.ReadLine());
+                Console.WriteLine("Enter employee RoleName");
+                Emp.RoleName = Console.ReadLine();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("error occured" + e.ToString());
+            }
+
+            var resultEmp = Add(Emp);
+            if (!resultEmp.isSucess)
+            {
+                Console.WriteLine("Employee failed to Add");
+                Console.WriteLine(resultEmp.status);
+            }
+            else
+            {
+                Console.WriteLine(resultEmp.status);
+            }
+        }
+
+        public Result Add(Employee emp)
         {
             Result result = new Result() { isSucess = true };
 
@@ -40,10 +70,7 @@ namespace ppm.domain
             }
             return result;
         }
-
-
-
-        public DataResult<Employee> GetEmployeeInfo()
+        public DataResult<Employee> ListAll()
         {
             DataResult<Employee> data = new DataResult<Employee> { isSucess = true };
             if (_EmployeeList.Count > 0)
@@ -56,6 +83,68 @@ namespace ppm.domain
                 data.status = "List is Empty!";
             }
             return data;
+        }
+        public void DeleteEmployeeById()
+        {
+            Console.WriteLine("Choose Employee From Below Employee List: Employee ID:Employee First Name");
+            var resPro = ListAll();
+            if (resPro.isSucess)
+            {
+                foreach (Employee res in resPro.results)
+                {
+                    Console.WriteLine(res.Id + " : " + res.Fullname);
+                }
+            }
+            else
+            {
+                Console.WriteLine(resPro.status);
+            }
+            Console.Write("Enter The Employee Id wchich u want delete ");
+            int n2 = Convert.ToInt32(Console.ReadLine());
+            Projectmanager m1 = new Projectmanager();
+            var result1 = m1.isEmployeePresentinProject(n2);
+            if (!result1.isSucess)
+            {
+                var result = Remove(n2);
+                if (!result.isSucess)
+                {
+                    Console.WriteLine("Employee is not deleted");
+                    Console.WriteLine(result.status);
+                }
+                else
+                {
+                    Console.WriteLine(result.status);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result1.status);
+            }
+        }
+        public Result Remove(int id)
+        {
+            Employee Emp = new Employee();
+            Result result = new Result() { isSucess = true };
+            try
+            {
+                if (_EmployeeList.Exists(Emp => Emp.Id == id))
+                {
+                    var itemToRemove = _EmployeeList.Single(s => s.Id == id);
+                    _EmployeeList.Remove(itemToRemove);
+                    result.status = "Employee is Deleted Successfully " + Emp.Id;
+                }
+                else
+                {
+                    result.isSucess = false;
+                    result.status = "Employee Id is not in the List!" + id;
+                }
+            }
+            catch (Exception e)
+            {
+                result.isSucess = false;
+                result.status = "Exception Occured : " + e.ToString();
+            }
+            return result;
         }
         public Result IsValidEmp(Employee emp1)
 
@@ -85,6 +174,13 @@ namespace ppm.domain
             DataResult<Employee> data = new DataResult<Employee> { isSucess = true };
             return data;
         }
-      
+        public Employee GetEmployeetoRole(Employee employeeId)
+        {
+            Employee emp = new Employee();
+            emp.RoleName = _EmployeeList.Single(e => e.Id == employeeId.Id).RoleName;
+            emp.Fullname = _EmployeeList.Single(e => e.Id == employeeId.Id).Fullname;
+            return emp;
+        }
+
     }
 }

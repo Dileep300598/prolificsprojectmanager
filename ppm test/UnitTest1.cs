@@ -20,7 +20,7 @@ namespace ppm_test
             pp.StartDate = Convert.ToDateTime("01 - 01 - 2020");
             pp.EndDate = Convert.ToDateTime("01-01-2022");
             pp.Budget = 400000;
-            var v1 = project.AddProject(pp);
+            var v1 = project.Add(pp);
             if (v1.isSucess)
             {
                 Assert.Pass();
@@ -40,7 +40,7 @@ namespace ppm_test
             ee.Fullname = "Dileep";
             ee.Contact = 123456;
             ee.RoleName = "Hr";
-            var e1 = employee.AddEmployee(ee);
+            var e1 = employee.Add(ee);
             if (e1.isSucess)
             {
                 Assert.Pass();
@@ -57,7 +57,7 @@ namespace ppm_test
             Role r = new Role();
             r.RoleId = 12;
             r.RoleName = "Manager";
-            var r1 = role.AddRole(r);
+            var r1 = role.Add(r);
             if (r1.isSucess)
             {
                 Assert.Pass();
@@ -71,8 +71,8 @@ namespace ppm_test
        [Test]
        public void AddEmployeeToProject()
         {
-            Employee emp = new Employee();
-            Employeemanager ee = new Employeemanager();
+            Employee emp = new ();
+            Employeemanager ee = new();
             int id = 1;
             emp.Fullname = "dileep";
             var v1 = ee.IsValidEmp(emp);

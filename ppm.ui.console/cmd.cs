@@ -14,14 +14,14 @@ namespace ppm.ui.cli
             Console.WriteLine("1.Project Module");
             Console.WriteLine("2.Employee Module");
             Console.WriteLine("3.Role Module");
-            Console.WriteLine("4.Quit");
-            int i = 0;
+            Console.WriteLine("4.Save");
+            Console.WriteLine("5.Quit");
             while (true)
             {
                 try
                 {
                     Console.WriteLine("choose the given option: ");
-                    i = Convert.ToInt32(Console.ReadLine());
+                    int i = Convert.ToInt32(Console.ReadLine());
                     switch (i)
                     {
                         case 1:
@@ -33,6 +33,11 @@ namespace ppm.ui.cli
                         case 3:
                             RoleModule();
                             break;
+                        case 4:
+                            Save d1 = new Save();
+                            d1.save();
+                            break;
+
                         default:
                             Console.WriteLine("Option is not in the list!");
                             break;
@@ -57,13 +62,12 @@ namespace ppm.ui.cli
             Console.WriteLine("Press 4: Delete Project");
             Console.WriteLine("Press 5: Add employee to Project");
             Console.WriteLine("Press 6: Go to main Menu");
-            int j = 0;
             while (true)
             {
                 try
                 {
                     Console.WriteLine("Choose Your Option from 1 to 6: ");
-                    j = Convert.ToInt32(Console.ReadLine());
+                   int j = Convert.ToInt32(Console.ReadLine());
                     Projectmanager v2 = new Projectmanager();
                     switch (j)
                     {
@@ -137,13 +141,12 @@ namespace ppm.ui.cli
             Console.WriteLine("Press 3: List Employee by Id");
             Console.WriteLine("Press 4: Delete Employee");
             Console.WriteLine("Press 5: Return to main Menu");
-            int j = 0;
             while (true)
             {
                 try
                 {
                     Console.WriteLine("Choose Your option from 1 to 5: ");
-                    j = Convert.ToInt32(Console.ReadLine());
+                   int j = Convert.ToInt32(Console.ReadLine());
                     Employeemanager e1 = new Employeemanager();
                     switch (j)
                     {
@@ -212,13 +215,12 @@ namespace ppm.ui.cli
             Console.WriteLine("Press 3: List Role by Id");
             Console.WriteLine("Press 4: Delete Role");
             Console.WriteLine("Press 5: GO to main Menu");
-            int j = 0;
             while (true)
             {
                 try
                 {
                     Console.WriteLine("Choose your options: ");
-                    j = Convert.ToInt32(Console.ReadLine());
+                   int j = Convert.ToInt32(Console.ReadLine());
                     Rolemanager m3 = new Rolemanager();
                     switch (j)
                     {

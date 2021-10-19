@@ -10,89 +10,73 @@ namespace ppm.domain
 {
     public class Projectmanager : IOperation<Project>
     {
-        private static List<Project> _projectList = new List<Project>();
+        public static List<Project> _projectList = new List<Project>();
+        
         public void AddProject()
         {
             Project project = new Project();
             try
             {
-
-
-                Console.WriteLine("Enter project Id");
+                Console.Write("Enter Project ID: ");
                 project.id = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("Enter project Name");
-                project.Name = Convert.ToString(Console.ReadLine());
-                Console.WriteLine("Enter project StartDate");
+                Console.Write("Enter Project Name: ");
+                project.Name = Console.ReadLine().ToUpper();
+                Console.Write("Enter Project Starting Date: ");
                 project.StartDate = Convert.ToDateTime(Console.ReadLine());
-                Console.WriteLine("Enter project EndDate");
+                Console.Write("Enter Project End date: ");
                 project.EndDate = Convert.ToDateTime(Console.ReadLine());
-                Console.WriteLine("Enter project Budget");
+                Console.Write("Enter Project Budget: ");
                 project.Budget = Convert.ToDecimal(Console.ReadLine());
             }
             catch (Exception e)
             {
-                Console.WriteLine("error occured" + e.ToString());
-
+                Console.WriteLine("Error Occoured!" + e.ToString());
             }
-
-            var resultEmp = Add(project);
-            if (!resultEmp.isSucess)
+            Projectmanager projectManager = new Projectmanager();
+            var resultProject = projectManager.Add(project);
+            if (!resultProject.isSucess)
             {
                 Console.WriteLine("Project failed to Add");
-                Console.WriteLine(resultEmp.status);
+                Console.WriteLine(resultProject.status);
             }
             else
             {
-                Console.WriteLine(resultEmp.status);
+                Console.WriteLine(resultProject.status);
             }
         }
-
-        public Result Add(Project pro)
+        public Result Add(Project project)
         {
             Result result = new Result() { isSucess = true };
             try
             {
                 if (_projectList.Count > 0)
                 {
-                    if (_projectList.Exists(pr => pr.id == pro.id))
-
+                    if (_projectList.Exists(proj => proj.id == project.id))
                     {
                         result.isSucess = false;
-                        result.status = "project already exists" + pro.Name;
+                        result.status = "Validation Failed. ID is already Exists!";
+                    }
+                    else
+                    {
+                        _projectList.Add(project);
+                        result.status = "project Added";
                     }
                 }
                 else
                 {
-                    _projectList.Add(pro);
-                    result.status = "Project added";
+                    _projectList.Add(project);
+                    result.status = "New Project Added";
                 }
-
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.WriteLine("error occured" + ex.ToString());
                 result.isSucess = false;
+                result.status = "Exception Occured : " + e.ToString();
             }
             return result;
         }
-        //Add Result Add(T t)
-        //ListAll DataResult<T> ListAll()
-        //ListById
-        //Delete Result Remove(int id)
-        public DataResult<Project> ListAll()
-        {
-            DataResult<Project> data = new DataResult<Project> { isSucess = true };
-            if (_projectList.Count > 0)
-            {
-                data.results = _projectList;
-            }
-            else
-            {
-                data.isSucess = false;
-                data.status = "List is Empty!";
-            }
-            return data;
-        }
+
+
         public Project GetProjectByID(int id)
         {
             Project project = new Project();
@@ -187,6 +171,20 @@ namespace ppm.domain
             {
                 Console.WriteLine(valid.status);
             }
+        }
+        public DataResult<Project> ListAll()
+        {
+            DataResult<Project> projResult = new DataResult<Project>() { isSucess = true };
+            if (_projectList.Count > 0)
+            {
+                projResult.results = _projectList;
+            }
+            else
+            {
+                projResult.isSucess = false;
+                projResult.status = "No Projects in list";
+            }
+            return projResult;
         }
         public Result isEmployeePresentinProject(int Id)
         {

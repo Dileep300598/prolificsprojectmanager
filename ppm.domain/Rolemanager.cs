@@ -8,27 +8,25 @@ namespace Domain
 {
     public class Rolemanager : IOperation<Role>
     {
-        private static List<Role> _roleList=new List<Role>();
-        public void AddRole()
+        public static List<Role> _roleList = new List<Role>();
+         public void AddRole()
         {
             Role role = new Role();
             try
             {
-
-                Console.WriteLine("Enter Role Id");
+                Console.Write("Enter Role Id : ");
                 role.RoleId = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("Enter Role Name");
-                role.RoleName = Convert.ToString(Console.ReadLine());
-
+                Console.Write("Enter Role Name: ");
+                role.RoleName = Console.ReadLine().ToUpper();
             }
             catch (Exception e)
             {
-                Console.WriteLine("error occured" + e.ToString());
+                Console.WriteLine("Error Occoured!" + e.ToString());
             }
             var resultRole = Add(role);
             if (!resultRole.isSucess)
             {
-                Console.WriteLine("Role failed to Add");
+                Console.WriteLine("Role Failed to Add");
                 Console.WriteLine(resultRole.status);
             }
             else
@@ -36,40 +34,39 @@ namespace Domain
                 Console.WriteLine(resultRole.status);
             }
         }
-
         public Result Add(Role role)
         {
             Result result = new Result() { isSucess = true };
             try
-
             {
                 if (_roleList.Count > 0)
                 {
                     if (_roleList.Exists(r => r.RoleId == role.RoleId))
                     {
                         result.isSucess = false;
-                        result.status = "Role already exists" + role.RoleName;
+                        result.status = "Validation Failed";
                     }
                     else
                     {
                         _roleList.Add(role);
                         result.status = "Role Added";
                     }
-                 
+                }
+                else
+                {
+                    _roleList.Add(role);
+                    result.status = "New Role Added";
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.WriteLine("error occured" + ex.ToString());
                 result.isSucess = false;
+                result.status = "Exception Occured : " + e.ToString();
             }
             return result;
         }
 
-        //Add Result Add(T t)
-        //ListAll DataResult<T> ListAll()
-        //ListById
-        //Delete Result Remove(int id)
+
 
         public DataResult<Role> ListAll()
         {

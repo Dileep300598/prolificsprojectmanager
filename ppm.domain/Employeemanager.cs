@@ -10,57 +10,62 @@ namespace ppm.domain
 {
     public class Employeemanager: IOperation<Employee>
     {
-        private static List<Employee> _EmployeeList = new List<Employee>();
+        public static List<Employee> _EmployeeList = new List<Employee>();
         public void AddEmployee()
         {
-            Employee Emp = new Employee();
+            Employee employee = new Employee();
             try
             {
-                Console.WriteLine("Enter Employee Id");
-                Emp.Id = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("Enter Employee Fullname");
-                Emp.Fullname = Convert.ToString(Console.ReadLine());
-                Console.WriteLine("Enter Employee Contact ");
-                Emp.Contact = Convert.ToInt64(Console.ReadLine());
-                Console.WriteLine("Enter employee RoleName");
-                Emp.RoleName = Console.ReadLine();
+                Console.Write("Enter Employee Id:");
+                employee.Id = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Enter Employee FullName: ");
+                employee.Fullname = Console.ReadLine();
+                Console.Write("Enter Employee Contact: ");
+                employee.Contact = Convert.ToInt64(Console.ReadLine());
+                Console.Write("Enter Employee Role Name: ");
+                employee.RoleName = Console.ReadLine();
             }
             catch (Exception e)
             {
-                Console.WriteLine("error occured" + e.ToString());
-            }
+                Console.WriteLine("Error Occoured!" + e.ToString());
 
-            var resultEmp = Add(Emp);
-            if (!resultEmp.isSucess)
+            }
+            var resultEmployee = Add(employee);
+            if (!resultEmployee.isSucess)
             {
                 Console.WriteLine("Employee failed to Add");
-                Console.WriteLine(resultEmp.status);
+                Console.WriteLine(resultEmployee.status);
             }
             else
             {
-                Console.WriteLine(resultEmp.status);
+                Console.WriteLine(resultEmployee.status);
             }
+
+
+
         }
-
-        public Result Add(Employee emp)
+        public Result Add(Employee employee)
         {
-            Result result = new Result() { isSucess = true };
-
+           Result result = new Result() { isSucess = true };
             try
             {
                 if (_EmployeeList.Count > 0)
                 {
-                    if (_EmployeeList.Exists(em => em.Id == emp.Id))
-
+                    if (_EmployeeList.Exists(em => em.Id == employee.Id))
                     {
                         result.isSucess = false;
-                        result.status = "employee already exists" + emp.Fullname;
+                        result.status = "ID Already Exists" + employee.Id;
+                    }
+                    else
+                    {
+                        _EmployeeList.Add(employee);
+                        result.status = "Employee Added";
                     }
                 }
                 else
                 {
-                    _EmployeeList.Add(emp);
-                    result.status = "Employee added";
+                    _EmployeeList.Add(employee);
+                    result.status = "New Employee Added";
                 }
             }
             catch (Exception ex)
@@ -69,6 +74,9 @@ namespace ppm.domain
                 result.isSucess = false;
             }
             return result;
+
+
+
         }
         public DataResult<Employee> ListAll()
         {

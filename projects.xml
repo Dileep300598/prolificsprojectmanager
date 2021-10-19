@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Project>
+    <id>1</id>
+    <Name>HI</Name>
+    <StartDate>2012-01-01T00:00:00</StartDate>
+    <EndDate>2013-01-01T00:00:00</EndDate>
+    <Budget>20000</Budget>
+  </Project>
+</ArrayOfProject>
